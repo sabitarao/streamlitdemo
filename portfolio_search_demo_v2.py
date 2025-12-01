@@ -101,7 +101,27 @@ def load_data():
     try:
         with open(relationships_path, 'r', encoding='utf-8') as f:
             rel_data = json.load(f)
-            relationships = rel_data.get('relationships', [])
+            raw_relationships = rel_data.get('relationships', [])
+            
+            # Robustness Fix: Handle cases where target might be a list (legacy data issue)
+            for rel in raw_relationships:
+                target = rel.get('target')
+                source = rel.get('source')
+                
+                # Skip invalid entries
+                if not source or not target:
+                    continue
+                    
+                if isinstance(target, list):
+                    # Flatten list targets into multiple relationships
+                    for t in target:
+                        if isinstance(t, str):
+                            new_rel = rel.copy()
+                            new_rel['target'] = t
+                            relationships.append(new_rel)
+                elif isinstance(target, str):
+                    relationships.append(rel)
+                    
     except FileNotFoundError:
         st.warning(f"Could not find {relationships_path}. Graph features will be limited.")
 
