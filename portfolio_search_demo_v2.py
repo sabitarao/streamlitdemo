@@ -6,7 +6,8 @@ import graphviz
 
 # Page Config
 st.set_page_config(
-    page_title="AI Ontology Retrieval Demo v2",
+    page_title="AI Ontology Retrieval Demo",
+    page_icon=None,
     layout="wide"
 )
 
@@ -22,10 +23,10 @@ def clean_mdx(text):
     text = re.sub(r'<Accordion\s+title="([^"]+)"[^>]*>', r'### \1\n', text)
     
     # Replace <Warning> with blockquote
-    text = re.sub(r'<Warning>', r'> ⚠️ **Warning**\n', text)
+    text = re.sub(r'<Warning>', r'> **Warning**\n', text)
     
     # Replace <Tip> with blockquote
-    text = re.sub(r'<Tip>', r'> 💡 **Tip**\n', text)
+    text = re.sub(r'<Tip>', r'> **Tip**\n', text)
     
     # Remove other opening tags (CardGroup, CodeGroup, etc)
     text = re.sub(r'<[A-Za-z]+[^>]*>', '', text)
@@ -213,9 +214,9 @@ def search_entities(query, entities, selected_types, selected_modules):
 
 # Sidebar
 with st.sidebar:
-    st.header("⚙️ Configuration")
+    st.header("Configuration")
     
-    if st.button("🗑️ Reset Conversation", type="primary"):
+    if st.button("Reset Conversation", type="primary"):
         st.session_state.messages = []
         st.rerun()
     
@@ -224,7 +225,7 @@ with st.sidebar:
     
     st.divider()
     
-    st.header("🎛️ Ontology Filters")
+    st.header("Ontology Filters")
     st.info("Filter the knowledge base to narrow down retrieval.")
     
     # Extract unique values for filters
@@ -240,14 +241,14 @@ with st.sidebar:
     st.caption(f"Total Relationships: {len(relationships)}")
 
 # Main Content
-st.title("🧠 AI-for-IA RAG System v2")
+st.title("AI-for-IA RAG System")
 st.markdown("""
 This is a **Retrieval Augmented Generation (RAG)** system powered by a structured Ontology.
 It retrieves exact content chunks from the `ai-for-ia` course modules to answer your questions.
 """)
 
 # Create Tabs
-tab1, tab2 = st.tabs(["💬 Chat & Retrieval", "🕸️ Knowledge Graph"])
+tab1, tab2 = st.tabs(["Chat & Retrieval", "Knowledge Graph"])
 
 with tab1:
     # Initialize Chat History
@@ -303,7 +304,7 @@ with tab1:
             st.session_state.search_selectbox = None # Clear selectbox
 
     # 3. Search UI
-    st.markdown("### 🔍 Search Knowledge Base")
+    st.markdown("### Search Knowledge Base")
     col_search_1, col_search_2 = st.columns([1, 1])
     
     with col_search_1:
@@ -361,7 +362,7 @@ with tab1:
         # 2. Retrieval (The "R" in RAG)
         with st.chat_message("assistant"):
             # Create a status container to show the "Thinking" process
-            with st.status("🧠 Retrieving & Analyzing...", expanded=True) as status:
+            with st.status("Retrieving & Analyzing...", expanded=True) as status:
                 
                 # A. Search the Index
                 st.write("Searching knowledge base...")
@@ -417,10 +418,10 @@ with tab1:
             
             if not api_key:
                 # INSPECTION MODE: Show the Retrieved Content directly
-                st.success("✅ **Retrieval Complete** (No API Key - Inspection Mode)")
+                st.success("**Retrieval Complete** (No API Key - Inspection Mode)")
                 
                 # Optional: Show the prompt for technical inspection
-                with st.expander("🛠️ View Technical Prompt (For Developers)", expanded=True):
+                with st.expander("View Technical Prompt (For Developers)", expanded=True):
                     st.markdown("This is the exact prompt that would be sent to the LLM if an API key were present:")
                     final_prompt = f"""
 **System:** You are an expert Information Architect. Answer using ONLY the context below.
@@ -435,17 +436,17 @@ with tab1:
                 st.session_state.messages.append({"role": "assistant", "content": "I have displayed the relevant content chunks above. To have me synthesize a direct answer, please provide an OpenAI API Key."})
 
 with tab2:
-    st.header("🕸️ Ontology Knowledge Graph")
+    st.header("Ontology Knowledge Graph")
     st.info("Visualize the relationships between concepts, frameworks, and principles.")
     
     # Legend
     st.markdown("""
     <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
-        <span style="background-color: lightcoral; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">🛠️ Framework</span>
-        <span style="background-color: lightgreen; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">⚖️ Principle</span>
-        <span style="background-color: lightyellow; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">💡 Concept</span>
-        <span style="background-color: lavender; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">📝 Activity</span>
-        <span style="background-color: gold; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">🎯 Selected / Result</span>
+        <span style="background-color: lightcoral; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Framework</span>
+        <span style="background-color: lightgreen; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Principle</span>
+        <span style="background-color: lightyellow; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Concept</span>
+        <span style="background-color: lavender; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Activity</span>
+        <span style="background-color: gold; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Selected / Result</span>
     </div>
     """, unsafe_allow_html=True)
 
@@ -597,4 +598,3 @@ with tab2:
                     graph.edge(rel['source'], rel['target'], label=rel['type'], fontsize='10')
                     
                 st.graphviz_chart(graph)
-
