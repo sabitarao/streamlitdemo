@@ -7,7 +7,6 @@ import graphviz
 # Page Config
 st.set_page_config(
     page_title="AI Ontology Retrieval Demo v2",
-    page_icon="🧠",
     layout="wide"
 )
 
@@ -598,3 +597,4 @@ with tab2:
                     graph.edge(rel['source'], rel['target'], label=rel['type'], fontsize='10')
                     
                 st.graphviz_chart(graph)
+
