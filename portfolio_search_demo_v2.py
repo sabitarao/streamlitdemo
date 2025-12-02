@@ -442,11 +442,11 @@ with tab2:
     # Legend
     st.markdown("""
     <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
-        <span style="background-color: lightcoral; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Framework</span>
-        <span style="background-color: lightgreen; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Principle</span>
-        <span style="background-color: lightyellow; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Concept</span>
-        <span style="background-color: lavender; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Activity</span>
-        <span style="background-color: gold; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Selected / Result</span>
+        <span style="background-color: lightcoral; color: #000; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Framework</span>
+        <span style="background-color: lightgreen; color: #000; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Principle</span>
+        <span style="background-color: lightyellow; color: #000; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Concept</span>
+        <span style="background-color: lavender; color: #000; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Activity</span>
+        <span style="background-color: gold; color: #000; padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9em;">Selected / Result</span>
     </div>
     """, unsafe_allow_html=True)
 
